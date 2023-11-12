@@ -269,7 +269,9 @@ VALUES
     NOW()
   );
 
--- shows table
+--
+-- Create movie screnening (shows) table
+-- Info - we can also set show date and time in one column
 CREATE TABLE screenings (
   screening_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   movie_id INT UNSIGNED NOT NULL,
@@ -286,6 +288,7 @@ CREATE TABLE screenings (
   FOREIGN KEY (screen_id) REFERENCES screens(screen_id)
 );
 
+--
 -- setting screening data
 INSERT INTO
   screenings (
@@ -333,6 +336,15 @@ VALUES
 --
 --  If the selected date is the current date, the compare time will be set current time plus 30 minutes; otherwise, it will be set to midnight (00:00).
 --
+-- Set variables for date and time
+SET
+  @selected_date = '2023-01-25';
+
+SET
+  @selected_time = '12:30';
+
+--
+--
 SELECT
   t.theatre_name,
   s.screen_name,
@@ -348,8 +360,8 @@ FROM
   JOIN movies AS m ON m.movie_id = sn.movie_id
 WHERE
   t.theatre_id = 3
-  AND sn.show_date = "2023-01-25"
-  AND sn.show_time > "12:30"
+  AND sn.show_date = @selected_date
+  AND sn.show_time > @selected_time
 ORDER BY
   sn.show_time,
   s.screen_id;
