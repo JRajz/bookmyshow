@@ -336,13 +336,6 @@ VALUES
 --
 --  If the selected date is the current date, the compare time will be set current time plus 30 minutes; otherwise, it will be set to midnight (00:00).
 --
--- Set variables for date and time
-SET
-  @selected_date = '2023-01-25';
-
-SET
-  @selected_time = '12:30';
-
 --
 --
 SELECT
@@ -360,8 +353,8 @@ FROM
   JOIN movies AS m ON m.movie_id = sn.movie_id
 WHERE
   t.theatre_id = 3
-  AND sn.show_date = @selected_date
-  AND sn.show_time > @selected_time
+  AND sn.show_date = '2023-01-25'
+  AND sn.show_time > '12:30'
 ORDER BY
   sn.show_time,
   s.screen_id;
