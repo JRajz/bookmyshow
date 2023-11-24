@@ -240,7 +240,7 @@ VALUES
     'Pathaan',
     'Action',
     'Hindi',
-    '2023-01-25',
+    '2023-11-25',
     NOW(),
     NOW()
   ),
@@ -272,17 +272,16 @@ VALUES
 --
 -- Create movie screnening (shows) table
 -- Info - we can also set show date and time in one column
-CREATE TABLE screenings (
-  screening_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE shows (
+  show_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   movie_id INT UNSIGNED NOT NULL,
   theatre_id INT UNSIGNED NOT NULL,
   screen_id INT UNSIGNED NOT NULL,
-  show_date DATE NOT NULL,
-  show_time TIME NOT NULL,
+  show_datetime DATETIME NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
-  PRIMARY KEY (screening_id),
-  UNIQUE KEY unique_screening (screen_id, movie_id, show_date, show_time),
+  PRIMARY KEY (show_id),
+  UNIQUE KEY unique_screening (screen_id, movie_id, show_datetime),
   FOREIGN KEY (movie_id) REFERENCES movies(movie_id),
   FOREIGN KEY (theatre_id) REFERENCES theatres(theatre_id),
   FOREIGN KEY (screen_id) REFERENCES screens(screen_id)
@@ -295,42 +294,41 @@ INSERT INTO
     movie_id,
     theatre_id,
     screen_id,
-    show_date,
-    show_time,
+    show_datetime,
     created_at,
     updated_at
   )
 VALUES
   -- PVR Orion Mall, Bangalore
-  (1, 3, 5, '2023-01-25', '10:00:00', NOW(), NOW()),
-  (1, 3, 5, '2023-01-25', '13:00:00', NOW(), NOW()),
-  (1, 3, 5, '2023-01-25', '16:00:00', NOW(), NOW()),
-  (1, 3, 5, '2023-01-25', '20:00:00', NOW(), NOW()),
-  (2, 3, 6, '2023-01-25', '10:00:00', NOW(), NOW()),
-  (2, 3, 6, '2023-01-25', '13:00:00', NOW(), NOW()),
-  (2, 3, 6, '2023-01-25', '16:00:00', NOW(), NOW()),
-  (2, 3, 6, '2023-01-25', '20:00:00', NOW(), NOW()),
-  (3, 3, 7, '2023-01-25', '10:00:00', NOW(), NOW()),
-  (3, 3, 7, '2023-01-25', '13:00:00', NOW(), NOW()),
-  (2, 3, 7, '2023-01-25', '20:00:00', NOW(), NOW()),
+  (1, 3, 5, '2023-11-25 10:00:00', NOW(), NOW()),
+  (1, 3, 5, '2023-11-25 13:00:00', NOW(), NOW()),
+  (1, 3, 5, '2023-11-25 16:00:00', NOW(), NOW()),
+  (1, 3, 5, '2023-11-25 20:00:00', NOW(), NOW()),
+  (2, 3, 6, '2023-11-25 10:00:00', NOW(), NOW()),
+  (2, 3, 6, '2023-11-25 13:00:00', NOW(), NOW()),
+  (2, 3, 6, '2023-11-25 16:00:00', NOW(), NOW()),
+  (2, 3, 6, '2023-11-25 20:00:00', NOW(), NOW()),
+  (3, 3, 7, '2023-11-25 10:00:00', NOW(), NOW()),
+  (3, 3, 7, '2023-11-25 13:00:00', NOW(), NOW()),
+  (2, 3, 7, '2023-11-25 20:00:00', NOW(), NOW()),
   -- INOX Forum Mall, Bangalore
-  (1, 4, 8, '2023-01-25', '16:30:00', NOW(), NOW()),
-  (2, 4, 9, '2023-01-25', '20:00:00', NOW(), NOW()),
+  (1, 4, 8, '2023-11-25 16:30:00', NOW(), NOW()),
+  (2, 4, 9, '2023-11-25 20:00:00', NOW(), NOW()),
   -- Cinepolis ETA Namma Mall, Bangalore
-  (1, 5, 10, '2023-01-25', '18:30:00', NOW(), NOW()),
-  (2, 5, 11, '2023-01-25', '22:00:00', NOW(), NOW()),
+  (1, 5, 10, '2023-11-25 18:30:00', NOW(), NOW()),
+  (2, 5, 11, '2023-11-25 22:00:00', NOW(), NOW()),
   -- Gopalan Cinemas, Bangalore
-  (1, 6, 12, '2023-01-25', '10:00:00', NOW(), NOW()),
-  (2, 6, 13, '2023-01-25', '14:30:00', NOW(), NOW()),
+  (1, 6, 12, '2023-11-25 10:00:00', NOW(), NOW()),
+  (2, 6, 13, '2023-11-25 14:30:00', NOW(), NOW()),
   -- Rockline Cinemas, Bangalore
-  (1, 7, 14, '2023-01-25', '22:30:00', NOW(), NOW()),
-  (2, 7, 15, '2023-01-25', '18:00:00', NOW(), NOW());
+  (1, 7, 14, '2023-11-25 22:30:00', NOW(), NOW()),
+  (2, 7, 15, '2023-11-25 18:00:00', NOW(), NOW());
 
 --
 -- Query to list down all the shows on a given date at a given theatre along with their respective show timings. 
 --
 -- Theatre - PVR Orion Mall, Bangalore
--- Date - 2023-01-25 (Assumes current date  2023-01- 12:30)
+-- Date - 2023-11-25 (Assumes current date  2023-01- 12:30)
 --
 -- Bookings for each show will be closed at a minimum of 30 minutes before the scheduled start time. 
 --
@@ -343,8 +341,7 @@ SELECT
   s.screen_name,
   s.capacity,
   m.movie_name,
-  sn.show_date,
-  sn.show_time
+  sn.show_datetime
 FROM
   theatres AS t
   JOIN screens AS s ON s.theatre_id = t.theatre_id
@@ -353,8 +350,7 @@ FROM
   JOIN movies AS m ON m.movie_id = sn.movie_id
 WHERE
   t.theatre_id = 3
-  AND sn.show_date = '2023-01-25'
-  AND sn.show_time > '12:30'
+  AND sn.show_datetime = '2023-11-25 12:30:00'
 ORDER BY
-  sn.show_time,
+  sn.show_datetime,
   s.screen_id;

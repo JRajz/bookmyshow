@@ -4,51 +4,62 @@ This repository contains the SQL scripts for creating the database schema for Bo
 
 ## Database Structure
 
-### 1. Cities Table
+## Cities Table
 
-- **city_id:** Unique identifier for each city.
-- **city_name:** Name of the city.
-- **created_at:** Date and time when the city record was created.
-- **updated_at:** Date and time when the city record was last updated.
+| Field      | Type           | Description                      |
+|------------|----------------|----------------------------------|
+| city_id    | INT UNSIGNED   | Unique city identifier           |
+| city_name  | VARCHAR(255)   | Name of the city                 |
+| created_at | DATETIME       | Timestamp of creation            |
+| updated_at | DATETIME       | Timestamp of last update         |
 
-### 2. Theatres Table
+## Theatres Table
 
-- **theatre_id:** Unique identifier for each theatre.
-- **theatre_name:** Name of the theatre.
-- **address:** Address of the theatre.
-- **city_id:** Foreign key referencing the `cities` table, indicating the city in which the theatre is located.
-- **created_at:** Date and time when the theatre record was created.
-- **updated_at:** Date and time when the theatre record was last updated.
+| Field      | Type           | Description                      |
+|------------|----------------|----------------------------------|
+| theatre_id | INT UNSIGNED   | Unique theatre identifier        |
+| theatre_name| VARCHAR(255)   | Name of the theatre               |
+| address    | VARCHAR(255)   | Address of the theatre            |
+| city_id    | INT UNSIGNED   | Foreign key to cities.city_id    |
+| created_at | DATETIME       | Timestamp of creation            |
+| updated_at | DATETIME       | Timestamp of last update         |
 
-### 3. Screens Table
+## Screens Table
 
-- **screen_id:** Unique identifier for each screen in a theatre.
-- **screen_name:** Name or identifier of the screen.
-- **theatre_id:** Foreign key referencing the `theatres` table, indicating the theatre to which the screen belongs.
-- **capacity:** The seating capacity of the screen.
-- **created_at:** Date and time when the screen record was created.
-- **updated_at:** Date and time when the screen record was last updated.
+| Field      | Type           | Description                      |
+|------------|----------------|----------------------------------|
+| screen_id  | INT UNSIGNED   | Unique screen identifier          |
+| screen_name| VARCHAR(255)   | Name of the screen                |
+| theatre_id | INT UNSIGNED   | Foreign key to theatres.theatre_id|
+| capacity   | INT            | Seating capacity of the screen    |
+| created_at | DATETIME       | Timestamp of creation             |
+| updated_at | DATETIME       | Timestamp of last update          |
 
-### 4. Movies Table
+## Movies Table
 
-- **movie_id:** Unique identifier for each movie.
-- **movie_name:** Name of the movie.
-- **genre:** Genre of the movie.
-- **language:** Language of the movie.
-- **release_date:** Release date of the movie.
-- **created_at:** Date and time when the movie record was created.
-- **updated_at:** Date and time when the movie record was last updated.
+| Field      | Type           | Description                      |
+|------------|----------------|----------------------------------|
+| movie_id   | INT UNSIGNED   | Unique movie identifier          |
+| movie_name | VARCHAR(255)   | Name of the movie                |
+| genre      | VARCHAR(255)   | Genre of the movie               |
+| language   | VARCHAR(50)    | Language of the movie            |
+| release_date| DATE           | Release date of the movie        |
+| created_at | DATETIME       | Timestamp of creation            |
+| updated_at | DATETIME       | Timestamp of last update         |
 
-### 5. Screenings Table
+## Shows Table
 
-- **screening_id:** Unique identifier for each screening.
-- **movie_id:** Foreign key referencing the `movies` table, indicating the movie being screened.
-- **theatre_id:** Foreign key referencing the `theatres` table, indicating the theatre where the screening takes place.
-- **screen_id:** Foreign key referencing the `screens` table, indicating the screen for the screening.
-- **show_date:** Date of the screening.
-- **show_time:** Time of the screening.
-- **created_at:** Date and time when the screening record was created.
-- **updated_at:** Date and time when the screening record was last updated.
+| Field      | Type           | Description                      |
+|------------|----------------|----------------------------------|
+| show_id    | INT UNSIGNED   | Unique show identifier           |
+| movie_id   | INT UNSIGNED   | Foreign key to movies.movie_id   |
+| theatre_id | INT UNSIGNED   | Foreign key to theatres.theatre_id|
+| screen_id  | INT UNSIGNED   | Foreign key to screens.screen_id  |
+| show_datetime | DATETIME    | Date and time of the show         |
+| created_at | DATETIME       | Timestamp of creation             |
+| updated_at | DATETIME       | Timestamp of last update          |
+
+This represents the detailed database schema for the BookMyShow application.
 
 ## Usage
 
