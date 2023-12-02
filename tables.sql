@@ -350,7 +350,7 @@ FROM
   JOIN movies AS m ON m.movie_id = sn.movie_id
 WHERE
   t.theatre_id = 3
-  AND sn.show_datetime = '2023-11-25 12:30:00'
+  AND sn.show_datetime > '2023-11-25 12:30:00'
 ORDER BY
   sn.show_datetime,
   s.screen_id;
